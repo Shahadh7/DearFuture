@@ -1,61 +1,242 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# DearFuture - Digital Memory Locker
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-12.x-red.svg" alt="Laravel Version">
+  <img src="https://img.shields.io/badge/PHP-8.2+-blue.svg" alt="PHP Version">
+  <img src="https://img.shields.io/badge/Vue.js-3.x-green.svg" alt="Vue.js Version">
+  <img src="https://img.shields.io/badge/TailwindCSS-3.x-38B2AC.svg" alt="TailwindCSS Version">
 </p>
 
-## About Laravel
+## About DearFuture
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+DearFuture is a modern web application that allows users to create digital time capsules - messages, photos, and videos that are automatically delivered to recipients at a specified future date. Built with Laravel 12, Vue.js 3, and TailwindCSS, it provides a secure and user-friendly platform for sending messages to the future.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Key Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Digital Time Capsules**: Create messages with text, images, and videos
+- **Scheduled Delivery**: Set specific dates for automatic message delivery
+- **Secure Storage**: Encrypted storage with secure delivery tokens
+- **Media Support**: Upload and attach various media types (images, videos, audio)
+- **User Authentication**: Secure user registration and login system
+- **Delivery Tracking**: Monitor delivery status and history
+- **Responsive Design**: Modern, mobile-friendly interface
 
-## Learning Laravel
+## Technology Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Backend
+- **Laravel 12** - PHP web framework
+- **SQLite** - Database (easily configurable for production)
+- **Laravel Sanctum** - API authentication
+- **Spatie Media Library** - File upload and management
+- **Laravel Queue** - Background job processing
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Frontend
+- **Vue.js 3** - Progressive JavaScript framework
+- **Inertia.js** - Modern monolith approach
+- **TailwindCSS** - Utility-first CSS framework
+- **Heroicons** - Beautiful SVG icons
+- **Vite** - Build tool and dev server
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Development Tools
+- **Laravel Breeze** - Authentication scaffolding
+- **Laravel Pint** - PHP code style fixer
+- **PHPUnit** - Testing framework
+- **Laravel Pail** - Log viewer
 
-## Laravel Sponsors
+## Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Prerequisites
+- PHP 8.2 or higher
+- Composer
+- Node.js 18+ and npm
+- SQLite (or MySQL/PostgreSQL for production)
 
-### Premium Partners
+### Setup Instructions
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd DearFuture
+   ```
+
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
+
+3. **Install Node.js dependencies**
+   ```bash
+   npm install
+   ```
+
+4. **Environment setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+5. **Database setup**
+   ```bash
+   php artisan migrate
+   php artisan db:seed
+   ```
+
+6. **Build assets**
+   ```bash
+   npm run build
+   ```
+
+7. **Start the development server**
+   ```bash
+   # Option 1: Use the convenience script
+   composer run dev
+   
+   # Option 2: Start services individually
+   php artisan serve
+   php artisan queue:listen
+   npm run dev
+   ```
+
+The application will be available at `http://localhost:8000`
+
+## Configuration
+
+### Mail Configuration
+DearFuture uses Laravel's mail system for delivering time capsules. Configure your mail settings in `.env`:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=your-smtp-host
+MAIL_PORT=587
+MAIL_USERNAME=your-username
+MAIL_PASSWORD=your-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=noreply@dearfuture.com
+MAIL_FROM_NAME="DearFuture"
+```
+
+### File Storage
+Media files are stored using Laravel's file system. For production, consider using cloud storage:
+
+```env
+FILESYSTEM_DISK=s3
+AWS_ACCESS_KEY_ID=your-key
+AWS_SECRET_ACCESS_KEY=your-secret
+AWS_DEFAULT_REGION=your-region
+AWS_BUCKET=your-bucket
+```
+
+## Usage
+
+### Creating a Time Capsule
+
+1. Register an account or log in
+2. Navigate to "Create Capsule"
+3. Fill in the capsule details:
+   - Title
+   - Message content
+   - Recipient email
+   - Unlock date
+   - Attach media files (optional)
+4. Save as draft or lock the capsule
+
+### Managing Capsules
+
+- **Draft**: Capsules in progress that can be edited
+- **Locked**: Capsules scheduled for delivery
+- **Delivered**: Capsules that have been sent to recipients
+
+### Delivery System
+
+The application includes a command-line tool for processing deliveries:
+
+```bash
+php artisan capsules:deliver
+```
+
+This command:
+- Finds capsules ready for delivery
+- Sends emails to recipients
+- Updates delivery status
+- Logs delivery attempts
+
+## Project Structure
+
+```
+DearFuture/
+├── app/
+│   ├── Console/Commands/     # Artisan commands
+│   ├── Http/Controllers/     # Application controllers
+│   ├── Models/              # Eloquent models
+│   ├── Notifications/       # Email notifications
+│   └── Policies/           # Authorization policies
+├── resources/
+│   └── js/
+│       ├── Components/      # Vue components
+│       ├── Layouts/         # Page layouts
+│       └── Pages/          # Inertia pages
+├── database/
+│   ├── migrations/         # Database migrations
+│   └── seeders/           # Database seeders
+└── storage/
+    └── mail-logs/         # Email delivery logs
+```
+
+## Testing
+
+Run the test suite:
+
+```bash
+composer test
+```
+
+Or run specific test files:
+
+```bash
+php artisan test --filter CapsuleTest
+```
+
+## Deployment
+
+### Production Considerations
+
+1. **Database**: Use MySQL or PostgreSQL for production
+2. **Queue Worker**: Set up a proper queue worker (Redis recommended)
+3. **File Storage**: Use cloud storage (AWS S3, DigitalOcean Spaces, etc.)
+4. **Mail Service**: Configure a reliable mail service (Mailgun, SendGrid, etc.)
+5. **SSL**: Ensure HTTPS is enabled
+6. **Environment**: Set `APP_ENV=production` and `APP_DEBUG=false`
+
+### Deployment Commands
+
+```bash
+composer install --optimize-autoloader --no-dev
+npm run build
+php artisan migrate --force
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Support
+
+For support and questions:
+- Create an issue on GitHub
+- Check the Laravel documentation
+- Review the application logs
+
+---
+
+**DearFuture** - Sending messages to the future, one capsule at a time. 
