@@ -38,8 +38,24 @@ class DeliverCapsules extends Command
 
         foreach ($capsules as $capsule) {
             try {
-                // Send notification to the capsule owner
-                $capsule->user->notify(new CapsuleDelivered($capsule));
+                // Generate delivery token for unlock link
+                $capsule->generateDeliveryToken();
+                
+                // Refresh the capsule to get the updated delivery_token
+                $capsule->refresh();
+                
+                // Send notification to the recipient if email is set, otherwise to the capsule owner
+                if ($capsule->recipient_email) {
+                    $user = \App\Models\User::where('email', $capsule->recipient_email)->first();
+                    if ($user) {
+                        $user->notify(new CapsuleDelivered($capsule->id, $capsule->delivery_token));
+                    } else {
+                        Notification::route('mail', $capsule->recipient_email)
+                            ->notify(new CapsuleDelivered($capsule->id, $capsule->delivery_token));
+                    }
+                } else {
+                    $capsule->user->notify(new CapsuleDelivered($capsule->id, $capsule->delivery_token));
+                }
                 
                 // Mark capsule as delivered
                 $capsule->markAsDelivered();
